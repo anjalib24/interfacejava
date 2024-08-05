@@ -1,0 +1,101 @@
+In Java, methods in an interface can have specific modifiers that define their behavior and accessibility. The allowed modifiers for methods in an interface are:
+
+1. **Abstract** (implicit, not explicitly declared)
+2. **Default**
+3. **Static**
+4. **Private** (since Java 9)
+
+### 1. **Abstract Methods**
+
+Abstract methods in an interface are methods that do not have a body and must be implemented by any class that implements the interface. By default, all methods in an interface are abstract unless they are defined with other modifiers.
+
+### 2. **Default Methods**
+
+Default methods in an interface provide a default implementation. These methods can be overridden by implementing classes but are not required to be. Default methods were introduced in Java 8.
+
+### 3. **Static Methods**
+
+Static methods in an interface are associated with the interface itself rather than any instance of the class. They can be called on the interface without needing an instance of an implementing class. Static methods were also introduced in Java 8.
+
+### 4. **Private Methods**
+
+Private methods in an interface allow sharing code between default methods or static methods within the same interface. They cannot be accessed or overridden by implementing classes. Private methods were introduced in Java 9.
+
+### Example Demonstrating Different Modifiers in an Interface
+
+```java
+public interface Animal {
+    // Abstract method (implicit)
+    void makeSound();
+
+    // Default method
+    default void eat() {
+        System.out.println("Eating...");
+    }
+
+    // Static method
+    static void sleep() {
+        System.out.println("Sleeping...");
+    }
+
+    // Private method (only accessible within the interface)
+    private void breathe() {
+        System.out.println("Breathing...");
+    }
+
+    // Default method calling a private method
+    default void live() {
+        breathe();
+        System.out.println("Living...");
+    }
+}
+
+// Implementing the interface
+public class Dog implements Animal {
+    // Implementing the abstract method
+    @Override
+    public void makeSound() {
+        System.out.println("Bark");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.makeSound(); // Output: Bark
+        dog.eat();       // Output: Eating...
+        dog.live();      // Output: Breathing...
+                         //         Living...
+
+        // Calling the static method from the interface
+        Animal.sleep();  // Output: Sleeping...
+    }
+}
+```
+
+### Key Points
+
+1. **Abstract Methods**:
+   - Implicit in an interface unless specified otherwise.
+   - Must be implemented by the class that implements the interface.
+
+2. **Default Methods**:
+   - Provide a default implementation.
+   - Can be overridden by the implementing class.
+
+3. **Static Methods**:
+   - Can be called on the interface itself.
+   - Cannot be overridden by the implementing class.
+
+4. **Private Methods**:
+   - Used to share code between default or static methods within the same interface.
+   - Not accessible by implementing classes or other interfaces.
+
+### Summary
+
+- **Abstract**: Implicit by default, must be implemented by implementing classes.
+- **Default**: Provides a default implementation, can be overridden.
+- **Static**: Belongs to the interface, can be called without an instance.
+- **Private**: Used for internal code sharing within the interface, not accessible outside.
+
+These modifiers enhance the flexibility and functionality of interfaces, making them more powerful and versatile in designing Java applications.
